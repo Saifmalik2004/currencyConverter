@@ -3,7 +3,7 @@ import { InputBox } from './component';
 import useCurrencyInfo from './hooks/usecurrencyinfo';
 
 function App() {
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState();
   const [from, setFrom] = useState('usd');
   const [to, setTo] = useState('inr');
   const [convertedAmount, setConvertedAmount] = useState(0);
@@ -11,9 +11,7 @@ function App() {
   const currencyInfo = useCurrencyInfo(from);
   const options = Object.keys(currencyInfo);
 
-  useEffect(() => {
-    convert();
-  }, [amount, from, to, currencyInfo]);
+ 
 
   const swap = () => {
     const temp = from;
@@ -28,11 +26,7 @@ function App() {
     }
   };
 
-  const handleAmountChange = (newAmount) => {
-    if (newAmount >= 0) {
-      setAmount(newAmount);
-    }
-  };
+  
 
   return (
     <div
@@ -56,7 +50,7 @@ function App() {
                 currencyOptions={options}
                 onCurrencyChange={(currency) => setFrom(currency)}
                 selectCurrency={from}
-                onAmountChange={handleAmountChange}
+                onAmountChange={(amount)=> setAmount(amount)}
               />
             </div>
             <div className="relative w-full h-0.5">
